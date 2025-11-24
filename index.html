@@ -411,7 +411,7 @@
         </div>
         <div class="status-square" id="status-square">
           <div class="status-main" id="status-main">距離出發尚餘 30 日</div>
-          <div class="status-sub" id="status-sub">以日本時間計算</div>
+          <div class="status-sub" id="status-sub">以上海時間計算</div>
         </div>
       </div>
     </div>
@@ -709,16 +709,16 @@
       }
     });
 
-    // Japan date helper
-    function getJapanDateString() {
-      const now = new Date();
-      const offsetMinutes = 9 * 60 + now.getTimezoneOffset();
-      const jst = new Date(now.getTime() + offsetMinutes * 60000);
-      const y = jst.getFullYear();
-      const m = String(jst.getMonth() + 1).padStart(2, "0");
-      const d = String(jst.getDate()).padStart(2, "0");
-      return y + "-" + m + "-" + d;
-    }
+    // Shanghai date helper
+function getShanghaiDateString() {
+  const now = new Date();
+  const offsetMinutes = 8 * 60 + now.getTimezoneOffset();
+  const cst = new Date(now.getTime() + offsetMinutes * 60000);
+  const y = cst.getFullYear();
+  const m = String(cst.getMonth() + 1).padStart(2, "0");
+  const d = String(cst.getDate()).padStart(2, "0");
+  return y + "-" + m + "-" + d;
+}
 
     function updateTodayChipAndStatus(data) {
       const chip = document.getElementById("today-chip");
@@ -727,7 +727,7 @@
       const statusSub = document.getElementById("status-sub");
       if (!data.days || !data.days.length || !chip || !statusSquare) return;
 
-      const todayIso = getJapanDateString();
+      const todayIso = getShanghaiDateString();
       const startIso = data.meta && data.meta.tripStartIso;
       const endIso = data.meta && data.meta.tripEndIso;
 
@@ -772,7 +772,7 @@
         const daysToGo = diffInDays(todayIso, startIso);
         chip.textContent = "尚未出發";
         chip.classList.remove("active");
-        showSquare("距離出發尚餘 " + daysToGo + " 日", "以日本時間計算");
+        showSquare("距離出發尚餘 " + daysToGo + " 日", "以上海時間計算");
       } else if (endIso && todayIso > endIso) {
         chip.textContent = "行程已完成";
         chip.classList.remove("active");
