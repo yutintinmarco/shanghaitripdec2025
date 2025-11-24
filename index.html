@@ -8,12 +8,16 @@
   <meta http-equiv="Expires" content="0" />
   <title>上海行程</title>
   <style>
+    .bg-fixed {
+      position: fixed;
+      inset: 0;
+      background: url("bg_trip.jpg") center center / cover no-repeat;
+      z-index: -1;
+    }
     body {
       margin: 0;
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
-      background:
-        linear-gradient(rgba(245,245,247,0.80), rgba(245,245,247,0.80)),
-        url("bg_trip.jpg") center center / cover fixed no-repeat;
+      background: rgba(245,245,247,0.80);
       color: #111111;
 }
     .container {
@@ -390,6 +394,8 @@
   <link rel="icon" type="image/png" href="trip_icon.png" />
 </head>
 <body>
+  <div class="bg-fixed"></div>
+  
   <div class="container">
     <div id="pull-indicator" class="pull-indicator">下拉更新行程</div>
 
