@@ -675,6 +675,7 @@
           const title = item.getAttribute("data-title") || "";
           const time = item.getAttribute("data-time") || "";
           const detail = item.getAttribute("data-detail") || "";
+          const detailLinesRaw = item.getAttribute("data-detail-lines");
           const maps = item.getAttribute("data-maps") || "";
           const galleryKey = item.getAttribute("data-gallery") || "";
           const dianping = item.getAttribute("data-dianping") || "";
@@ -683,7 +684,16 @@
 
           detailTitle.textContent = title;
           detailTime.textContent = time;
-          detailBody.textContent = detail;
+          if (detailLinesRaw) {
+            try {
+              const lines = JSON.parse(detailLinesRaw);
+              detailBody.innerHTML = lines.map(line => `<div>${line}</div>`).join("");
+            } catch (e) {
+              detailBody.textContent = detail;
+            }
+          } else {
+            detailBody.textContent = detail;
+          }
           currentMapsUrl = maps;
           currentDianpingUrl = dianping;
           currentBookingUrl = bookingPdf;
@@ -921,6 +931,9 @@ function getShanghaiDateString() {
               itemEl.setAttribute("data-title", item.title || "");
               itemEl.setAttribute("data-time", item.time || "");
               itemEl.setAttribute("data-detail", item.detail || "");
+              if (item.detailLines) {
+                itemEl.setAttribute("data-detail-lines", JSON.stringify(item.detailLines));
+              }
               itemEl.setAttribute("data-maps", item.maps || "");
               if (item.gallery) {
                 itemEl.setAttribute("data-gallery", item.gallery);
