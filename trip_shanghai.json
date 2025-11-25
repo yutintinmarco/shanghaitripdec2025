@@ -48,7 +48,13 @@
           "maps": "https://map.baidu.com/search/%E5%85%A8%E5%AD%A3%E9%85%92%E5%BA%97%EF%BC%88%E4%B8%8A%E6%B5%B7%E6%AD%A6%E5%AF%A7%E8%B7%AF%E5%9C%B0%E9%93%81%E7%AB%99%E5%BA%97%EF%BC%89",
           "gallery": "hotel_quanji",
           "bookingPdf": "quanji_booking.pdf",
-          "bookingGallery": "quanji_booking"
+          "bookingGallery": "quanji_booking",
+          "detailLines": [
+            "全季酒店走簡潔實用風格",
+            "鄰近武寧路地鐵站",
+            "周邊有便利店及餐飲選擇",
+            "適合短途商旅及週末行程"
+          ]
         }
       ],
       "isoDate": "2025-12-05"
@@ -82,7 +88,13 @@
           "maps": "https://map.baidu.com/search/%E9%9D%99%E5%AE%89%E9%A6%99%E6%A0%BC%E9%87%8C%E6%8B%89%E5%A4%A7%E9%85%92%E5%BA%97",
           "gallery": "hotel_jingan",
           "bookingPdf": "jingan_booking.pdf",
-          "bookingGallery": "jingan_booking"
+          "bookingGallery": "jingan_booking",
+          "detailLines": [
+            "位處靜安區核心地段",
+            "交通方便",
+            "連接大型商場及餐飲設施",
+            "建議先熟悉最近地鐵站及商場出入口"
+          ]
         },
         {
           "time": "13:00",
@@ -98,7 +110,13 @@
           "popup": true,
           "detail": "上海代表性景點之一  可遠眺浦東摩天大樓及黃浦江景色  建議預留拍照時間  人流較多時留意個人財物。",
           "maps": "https://map.baidu.com/search/%E5%A4%96%E6%B4%A9",
-          "gallery": "bund"
+          "gallery": "bund",
+          "detailLines": [
+            "上海代表性景點之一",
+            "可遠眺浦東摩天大樓及黃浦江景色",
+            "建議預留拍照時間",
+            "人流較多時留意個人財物"
+          ]
         },
         {
           "time": "15:00",
@@ -107,7 +125,12 @@
           "note": "建議乘地鐵前往天潼路站  再步行進入",
           "popup": true,
           "detail": "上海最繁華商圈之一  百貨公司及品牌店林立  適合購物及感受城市氣氛。",
-          "maps": "https://map.baidu.com/search/%E5%8D%97%E4%BA%AC%E8%B7%AF%E6%AD%A5%E8%A1%8C%E8%A1%97"
+          "maps": "https://map.baidu.com/search/%E5%8D%97%E4%BA%AC%E8%B7%AF%E6%AD%A5%E8%A1%8C%E8%A1%97",
+          "detailLines": [
+            "上海最繁華商圈之一",
+            "百貨公司及品牌店林立",
+            "適合購物及感受城市氣氛"
+          ]
         },
         {
           "time": "16:30",
@@ -116,7 +139,12 @@
           "note": "可拍攝外白渡橋與東方明珠同框畫面",
           "popup": true,
           "detail": "經典拍攝角度集中區  可從不同橋位欣賞黃浦江兩岸景色  適合黃昏前後逗留。",
-          "maps": "https://map.baidu.com/search/%E4%B8%8A%E6%B5%B7%E9%82%AE%E6%94%BF%E5%8D%9A%E7%89%A9%E9%A6%86"
+          "maps": "https://map.baidu.com/search/%E4%B8%8A%E6%B5%B7%E9%82%AE%E6%94%BF%E5%8D%9A%E7%89%A9%E9%A6%86",
+          "detailLines": [
+            "經典拍攝角度集中區",
+            "可從不同橋位欣賞黃浦江兩岸景色",
+            "適合黃昏前後逗留"
+          ]
         },
         {
           "time": "17:00",
@@ -131,7 +159,12 @@
           "note": "可按當日情況選擇餐廳",
           "popup": true,
           "detail": "鄰近北外灘一帶的綜合商業區  餐廳選擇多樣  方便飯後順道欣賞夜景。",
-          "maps": "https://map.baidu.com/search/%E7%99%BD%E7%8E%89%E5%85%B0%E5%B9%BF%E5%9C%BA"
+          "maps": "https://map.baidu.com/search/%E7%99%BD%E7%8E%89%E5%85%B0%E5%B9%BF%E5%9C%BA",
+          "detailLines": [
+            "鄰近北外灘一帶的綜合商業區",
+            "餐廳選擇多樣",
+            "方便飯後順道欣賞夜景"
+          ]
         },
         {
           "time": "20:00",
@@ -141,7 +174,13 @@
           "popup": true,
           "detail": "視野開揚  夜景極佳  適合散步及拍照  亦可作為外灘景觀的另一觀賞角度。",
           "maps": "https://map.baidu.com/search/%E5%8C%97%E5%A4%96%E6%B4%A9",
-          "gallery": "north_bund"
+          "gallery": "north_bund",
+          "detailLines": [
+            "視野開揚",
+            "夜景極佳",
+            "適合散步及拍照",
+            "亦可作為外灘景觀的另一觀賞角度"
+          ]
         },
         {
           "time": "21:00",
@@ -156,7 +195,12 @@
           "note": "視乎現場排隊及氣氛靈活決定逗留時間",
           "popup": true,
           "detail": "在亞洲酒吧榜單中屢獲佳績的雞尾酒吧  氣氛熱鬧  建議預早到達或預留排隊時間。",
-          "maps": "https://map.baidu.com/search/COA%20%E9%85%92%E5%90%A7"
+          "maps": "https://map.baidu.com/search/COA%20%E9%85%92%E5%90%A7",
+          "detailLines": [
+            "在亞洲酒吧榜單中屢獲佳績的雞尾酒吧",
+            "氣氛熱鬧",
+            "建議預早到達或預留排隊時間"
+          ]
         }
       ],
       "isoDate": "2025-12-06"
@@ -181,7 +225,13 @@
           "popup": true,
           "detail": "武康大樓為著名歷史建築  呈楔形外觀  是法租界一帶人氣拍照地點  人流較多時注意安全。",
           "maps": "https://map.baidu.com/search/%E6%AD%A6%E5%BA%B7%E5%A4%A7%E6%A5%BC",
-          "gallery": "wukang"
+          "gallery": "wukang",
+          "detailLines": [
+            "武康大樓為著名歷史建築",
+            "呈楔形外觀",
+            "是法租界一帶人氣拍照地點",
+            "人流較多時注意安全"
+          ]
         },
         {
           "time": "11:30",
@@ -190,7 +240,12 @@
           "note": "感受法租界街區氛圍",
           "popup": true,
           "detail": "沿路有多間特色小店及咖啡店  樹蔭大道適合慢行  視乎時間彈性調整行程長度。",
-          "maps": "https://map.baidu.com/search/%E5%AE%89%E7%A6%8F%E8%B7%AF"
+          "maps": "https://map.baidu.com/search/%E5%AE%89%E7%A6%8F%E8%B7%AF",
+          "detailLines": [
+            "沿路有多間特色小店及咖啡店",
+            "樹蔭大道適合慢行",
+            "視乎時間彈性調整行程長度"
+          ]
         },
         {
           "time": "12:00",
@@ -200,7 +255,12 @@
           "popup": true,
           "detail": "以傳統滬菜見稱  口味偏濃偏甜  建議多人共享不同菜式。",
           "maps": "https://map.baidu.com/search/%E6%B2%AA%E8%A5%BF%E8%80%81%E5%BC%84%E5%A0%82",
-          "dianping": "https://m.dianping.com/shopinfo/l5uh6bCVt12QboDC?msource=Appshare2021&utm_source=shop_share&shoptype=10&shopcategoryid=215&cityid=1&isoversea=0"
+          "dianping": "https://m.dianping.com/shopinfo/l5uh6bCVt12QboDC?msource=Appshare2021&utm_source=shop_share&shoptype=10&shopcategoryid=215&cityid=1&isoversea=0",
+          "detailLines": [
+            "以傳統滬菜見稱",
+            "口味偏濃偏甜",
+            "建議多人共享不同菜式"
+          ]
         },
         {
           "time": "13:00",
@@ -209,7 +269,12 @@
           "note": "短暫參觀或在附近走走",
           "popup": true,
           "detail": "上海著名寺廟之一  外觀金光閃耀  周邊商業設施亦相當集中。",
-          "maps": "https://map.baidu.com/search/%E9%9D%99%E5%AE%89%E5%AF%BA"
+          "maps": "https://map.baidu.com/search/%E9%9D%99%E5%AE%89%E5%AF%BA",
+          "detailLines": [
+            "上海著名寺廟之一",
+            "外觀金光閃耀",
+            "周邊商業設施亦相當集中"
+          ]
         },
         {
           "time": "13:30",
@@ -219,7 +284,12 @@
           "popup": true,
           "detail": "淮海中路及新天地一帶結合商場  餐飲及展覽空間  適合邊逛邊看展。",
           "maps": "https://map.baidu.com/search/%E6%B7%AE%E6%B5%B7%E4%B8%AD%E8%B7%AF%20%E6%96%B0%E5%A4%A9%E5%9C%B0",
-          "gallery": "xintiandi"
+          "gallery": "xintiandi",
+          "detailLines": [
+            "淮海中路及新天地一帶結合商場",
+            "餐飲及展覽空間",
+            "適合邊逛邊看展"
+          ]
         },
         {
           "time": "15:00",
@@ -234,7 +304,12 @@
           "note": "文學迷可細味周邊街區氣氛",
           "popup": true,
           "detail": "與張愛玲相關的生活場域  留有舊上海的味道  適合文青散步路線。",
-          "maps": "https://map.baidu.com/search/%E5%BC%A0%E7%88%B1%E7%8E%B2%E6%97%A7%E5%B1%85"
+          "maps": "https://map.baidu.com/search/%E5%BC%A0%E7%88%B1%E7%8E%B2%E6%97%A7%E5%B1%85",
+          "detailLines": [
+            "與張愛玲相關的生活場域",
+            "留有舊上海的味道",
+            "適合文青散步路線"
+          ]
         },
         {
           "time": "17:00",
@@ -243,7 +318,11 @@
           "note": "為回程前最後一頓正式晚餐",
           "popup": true,
           "detail": "口碑不俗的餐廳  建議預早訂位或提早到達。",
-          "maps": "https://map.baidu.com/search/%E4%BA%BA%E5%92%8C%E9%A6%86"
+          "maps": "https://map.baidu.com/search/%E4%BA%BA%E5%92%8C%E9%A6%86",
+          "detailLines": [
+            "口碑不俗的餐廳",
+            "建議預早訂位或提早到達"
+          ]
         },
         {
           "time": "19:00",
