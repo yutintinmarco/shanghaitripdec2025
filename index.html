@@ -471,6 +471,7 @@
       <div class="modal-time" id="detail-time">時間</div>
       <div class="modal-body" id="detail-body">詳細內容</div>
       <div class="modal-actions">
+        <button class="modal-link-btn" id="detail-dianping-btn" style="display:none;">在大眾點評開啟</button>
         <button class="modal-link-btn" id="detail-booking-btn" style="display:none;">查看酒店預訂 PDF</button>
         <button class="modal-link-btn" id="detail-maps-btn">在百度地圖開啟</button>
         <button class="modal-close-btn" id="detail-close">關閉</button>
@@ -627,6 +628,7 @@
     const detailImgWrapper = document.getElementById("detail-img-wrapper");
     const detailImg = document.getElementById("detail-img");
     const detailDots = document.getElementById("detail-dots");
+    const detailDianpingBtn = document.getElementById("detail-dianping-btn");
 
     const GALLERIES = {
       "hotel_quanji": ["quanji_1.jpg", "quanji_2.jpg"],
@@ -640,6 +642,7 @@
     };
 
     let currentMapsUrl = "";
+    let currentDianpingUrl = "";
     let currentBookingUrl = "";
     let currentGallery = [];
     let currentGalleryIndex = 0;
@@ -671,6 +674,7 @@
           const detail = item.getAttribute("data-detail") || "";
           const maps = item.getAttribute("data-maps") || "";
           const galleryKey = item.getAttribute("data-gallery") || "";
+          const dianping = item.getAttribute("data-dianping") || "";
           const bookingGalleryKey = item.getAttribute("data-booking-gallery") || "";
           const bookingPdf = item.getAttribute("data-booking-pdf") || "";
 
@@ -678,6 +682,7 @@
           detailTime.textContent = time;
           detailBody.textContent = detail;
           currentMapsUrl = maps;
+          currentDianpingUrl = dianping;
           currentBookingUrl = bookingPdf;
           detailBackdrop.classList.add("active");
 
@@ -702,12 +707,21 @@
             detailImg.src = "";
           }
 
+          // 百度地圖按鈕
           if (!maps) {
             detailMapsBtn.style.display = "none";
           } else {
             detailMapsBtn.style.display = "inline-block";
           }
 
+          // 大眾點評按鈕
+          if (!dianping) {
+            detailDianpingBtn.style.display = "none";
+          } else {
+            detailDianpingBtn.style.display = "inline-block";
+          }
+
+          // PDF按鈕
           if (!bookingPdf) {
             detailBookingBtn.style.display = "none";
           } else {
@@ -738,6 +752,12 @@
         window.open(currentMapsUrl, "_blank");
       }
     });
+
+    detailDianpingBtn.addEventListener("click", () => {
+     if (currentDianpingUrl) {
+       window.open(currentDianpingUrl, "_blank");
+   }
+   });
 
     detailBookingBtn.addEventListener("click", () => {
       if (currentBookingUrl) {
@@ -901,6 +921,9 @@ function getShanghaiDateString() {
               itemEl.setAttribute("data-maps", item.maps || "");
               if (item.gallery) {
                 itemEl.setAttribute("data-gallery", item.gallery);
+              }
+              if (item.dianping) {
+               itemEl.setAttribute("data-dianping", item.dianping);
               }
               if (item.bookingGallery) {
                 itemEl.setAttribute("data-booking-gallery", item.bookingGallery);
