@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
-  />
+  name="viewport"
+  content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+/>
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
@@ -19,9 +19,28 @@
     }
     body {
       margin: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
-      background: rgba(245,245,247,0.80);
+      font-family:
+        -apple-system,
+        BlinkMacSystemFont,
+        "SF Pro Text",
+        system-ui,
+        sans-serif;
       color: #111111;
+      background: transparent;
+    }
+    .bg-overlay {
+      position: fixed;
+      inset: 0;
+      background: linear-gradient(
+        rgba(245, 245, 247, 0.88),
+        rgba(245, 245, 247, 0.94)
+      );
+      z-index: -1;
+    }
+    .page-root {
+      position: relative;
+      z-index: 0;
+      min-height: 100vh;
     }
     .container {
       max-width: 480px;
@@ -77,7 +96,7 @@
       max-width: 140px;
       text-align: right;
       line-height: 1.4;
-      box-shadow: 0 2px 6px rgba(15,23,42,0.06);
+      box-shadow: 0 2px 6px rgba(15, 23, 42, 0.06);
     }
     .today-chip.active {
       border-color: #f5c542;
@@ -99,7 +118,6 @@
     .refresh-btn:active {
       background: #ececf1;
     }
-    /* 小正方形 countdown：放在三行日期文字右側，平排 */
     .status-square {
       min-width: 120px;
       min-height: 60px;
@@ -107,7 +125,7 @@
       border-radius: 14px;
       background: #ffffff;
       border: 1px solid #e5e5ea;
-      box-shadow: 0 6px 14px rgba(15,23,42,0.08);
+      box-shadow: 0 6px 14px rgba(15, 23, 42, 0.08);
       text-align: center;
       display: none;
       flex-direction: column;
@@ -173,7 +191,6 @@
       width: auto;
       display: block;
     }
-
     .trip-col-title {
       font-size: 11px;
       color: #999999;
@@ -313,7 +330,7 @@
     .modal-backdrop {
       position: fixed;
       inset: 0;
-      background: rgba(0,0,0,0.35);
+      background: rgba(0, 0, 0, 0.35);
       display: none;
       align-items: center;
       justify-content: center;
@@ -328,7 +345,7 @@
       background: #ffffff;
       border-radius: 18px;
       padding: 14px 16px 12px 16px;
-      box-shadow: 0 18px 40px rgba(15,23,42,0.3);
+      box-shadow: 0 18px 40px rgba(15, 23, 42, 0.3);
     }
     .modal-img-wrapper {
       margin: -2px 0 8px 0;
@@ -337,16 +354,6 @@
       width: 100%;
       border-radius: 14px;
       display: block;
-      transition: opacity 0.25s ease, transform 0.25s ease;
-      will-change: opacity, transform;
-    }
-    .modal-img-wrapper img.fade-out {
-      opacity: 0;
-      transform: translateX(-8px);
-    }
-    .modal-img-wrapper img.fade-in {
-      opacity: 1;
-      transform: translateX(0);
     }
     .modal-dots {
       display: flex;
@@ -403,91 +410,97 @@
       font-size: 12px;
     }
   </style>
-  <link rel="apple-touch-icon" href="assets/icon/trip_icon.png" />
-  <link rel="icon" type="image/png" href="assets/icon/trip_icon.png" />
+  <link rel="apple-touch-icon" href="trip_icon.png" />
+  <link rel="icon" type="image/png" href="trip_icon.png" />
 </head>
 <body>
   <div class="bg-fixed"></div>
-  
-  <div class="container">
-    <div id="pull-indicator" class="pull-indicator">下拉更新行程</div>
+  <div class="bg-overlay"></div>
+  <div class="page-root">
+    <div class="container">
+      <div id="pull-indicator" class="pull-indicator">下拉更新行程</div>
 
-    <div class="header">
-      <div class="header-top">
-        <div>
-          <div class="header-title-small" id="header-title-small">My Trip</div>
-          <div class="header-title-main" id="header-title-main">上海三日行程</div>
+      <div class="header">
+        <div class="header-top">
+          <div>
+            <div class="header-title-small" id="header-title-small">My Trip</div>
+            <div class="header-title-main" id="header-title-main">上海三日行程</div>
+          </div>
+          <div class="header-right">
+            <div id="today-chip" class="today-chip">載入行程中…</div>
+            <button class="refresh-btn" id="refresh-btn">⟳</button>
+          </div>
         </div>
-        <div class="header-right">
-          <div id="today-chip" class="today-chip">載入行程中…</div>
-          <button class="refresh-btn" id="refresh-btn">⟳</button>
+
+        <div class="header-sub-row">
+          <div class="header-sub-text" id="header-sub">
+            旅程日期  十二月五日至十二月七日<br />
+            去程 CX302  香港至上海  21:15 至 23:55<br />
+            回程 CX327  上海至香港 22:30 至 01:20
+          </div>
+          <div class="status-square" id="status-square">
+            <div class="status-main" id="status-main">距離出發尚餘 30 日</div>
+            <div class="status-sub" id="status-sub">以上海時間計算</div>
+          </div>
         </div>
       </div>
 
-      <div class="header-sub-row">
-        <div class="header-sub-text" id="header-sub">
-          旅程日期  12月5日 至 12月7日<br/>
-          去程 CX302  香港 至 上海  21:15 至 23:55<br/>
-          回程 CX327  上海 至 香港 22:30 至 01:20
+      <div class="card">
+        <div class="trip-row trip-row-with-logo">
+          <div class="trip-col">
+            <div class="trip-col-title">去程</div>
+            <div class="trip-col-main" id="outbound-main">十二月五日  CX302</div>
+            <div class="trip-col-sub" id="outbound-sub">香港至上海  21:15 至 23:55</div>
+          </div>
+          <div class="trip-logo-col">
+            <img src="assets/logo/cx_logo.png" alt="Airline logo" class="trip-logo-img" />
+          </div>
+          <div class="trip-col trip-col-right">
+            <div class="trip-col-title">回程</div>
+            <div class="trip-col-main" id="inbound-main">十二月七日  CX327</div>
+            <div class="trip-col-sub" id="inbound-sub">上海至香港 22:30 至 01:20</div>
+          </div>
         </div>
-        <div class="status-square" id="status-square">
-          <div class="status-main" id="status-main">距離出發尚餘 30 日</div>
-          <div class="status-sub" id="status-sub">以上海時間計算</div>
+      </div>
+
+      <div class="card">
+        <div class="weather-header">
+          <div class="weather-title">上海天氣（自動更新）</div>
+          <div class="weather-updated" id="weather-updated">載入中…</div>
         </div>
+        <div class="weather-today" id="weather-today">正在取得今日天氣…</div>
+        <div class="weather-sun" id="weather-sun">正在取得日出日落時間…</div>
+        <div class="weather-days" id="weather-days"></div>
+      </div>
+
+      <div class="day-tabs" id="day-tabs"></div>
+
+      <div id="day-contents"></div>
+
+      <div class="footer-note" id="footer-note">
+        行程  天氣  日出日落  照片及地圖由 AI 協助整合  點擊酒店及景點可查看詳細資訊
       </div>
     </div>
 
-    <div class="card">
-      <div class="trip-row trip-row-with-logo">
-        <div class="trip-col">
-          <div class="trip-col-title">去程</div>
-          <div class="trip-col-main" id="outbound-main">12月5日  CX302</div>
-          <div class="trip-col-sub" id="outbound-sub">香港 至 上海  21:15 至 23:55</div>
+    <div class="modal-backdrop" id="detail-backdrop">
+      <div class="modal">
+        <div class="modal-img-wrapper" id="detail-img-wrapper" style="display: none">
+          <img id="detail-img" src="" alt="photo" />
+          <div class="modal-dots" id="detail-dots" style="display: none"></div>
         </div>
-        <div class="trip-logo-col">
-          <img src="assets/icon/cx_logo.png" alt="Airline logo" class="trip-logo-img" />
+        <div class="modal-title" id="detail-title">標題</div>
+        <div class="modal-time" id="detail-time">時間</div>
+        <div class="modal-body" id="detail-body">詳細內容</div>
+        <div class="modal-actions">
+          <button class="modal-link-btn" id="detail-maps-btn">在百度地圖開啟</button>
+          <button class="modal-link-btn" id="detail-booking-btn" style="display: none">
+            查看預訂文件
+          </button>
+          <button class="modal-link-btn" id="detail-dianping-btn" style="display: none">
+            在大眾點評開啟
+          </button>
+          <button class="modal-close-btn" id="detail-close">關閉</button>
         </div>
-        <div class="trip-col trip-col-right">
-          <div class="trip-col-title">回程</div>
-          <div class="trip-col-main" id="inbound-main">12月7日  CX327</div>
-          <div class="trip-col-sub" id="inbound-sub">上海 至 香港 22:30 至 01:20</div>
-        </div>
-      </div>
-    </div>
-
-    <div class="card">
-      <div class="weather-header">
-        <div class="weather-title">上海天氣（自動更新）</div>
-        <div class="weather-updated" id="weather-updated">載入中…</div>
-      </div>
-      <div class="weather-today" id="weather-today">正在取得今日天氣…</div>
-      <div class="weather-sun" id="weather-sun">正在取得日出日落時間…</div>
-      <div class="weather-days" id="weather-days"></div>
-    </div>
-
-    <div class="day-tabs" id="day-tabs"></div>
-
-    <div id="day-contents"></div>
-
-    <div class="footer-note" id="footer-note">
-      行程  天氣  日出日落  照片及地圖由 AI 協助整合  點擊酒店及景點可查看詳細資訊
-    </div>
-  </div>
-
-  <div class="modal-backdrop" id="detail-backdrop">
-    <div class="modal">
-      <div class="modal-img-wrapper" id="detail-img-wrapper" style="display:none;">
-        <img id="detail-img" src="" alt="photo" />
-        <div class="modal-dots" id="detail-dots" style="display:none;"></div>
-      </div>
-      <div class="modal-title" id="detail-title">標題</div>
-      <div class="modal-time" id="detail-time">時間</div>
-      <div class="modal-body" id="detail-body">詳細內容</div>
-      <div class="modal-actions">
-        <button class="modal-link-btn" id="detail-dianping-btn" style="display:none;">在大眾點評開啟</button>
-        <button class="modal-link-btn" id="detail-booking-btn" style="display:none;">查看酒店預訂 PDF</button>
-        <button class="modal-link-btn" id="detail-maps-btn">在百度地圖開啟</button>
-        <button class="modal-close-btn" id="detail-close">關閉</button>
       </div>
     </div>
   </div>
@@ -508,46 +521,49 @@
     let isPulling = false;
     const PULL_THRESHOLD = 70;
 
-    window.addEventListener("touchstart", (e) => {
-      if (window.scrollY === 0) {
-        isPulling = true;
-        pullStartY = e.touches[0].clientY;
-        pullDistance = 0;
-      } else {
+    window.addEventListener(
+      "touchstart",
+      e => {
+        if (window.scrollY === 0) {
+          isPulling = true;
+          pullStartY = e.touches[0].clientY;
+          pullDistance = 0;
+        } else {
+          isPulling = false;
+        }
+      },
+      { passive: true }
+    );
+
+    window.addEventListener(
+      "touchmove",
+      e => {
+        if (!isPulling) return;
+        const currentY = e.touches[0].clientY;
+        pullDistance = currentY - pullStartY;
+        if (pullDistance > 0 && pullIndicator) {
+          pullIndicator.classList.add("show");
+          pullIndicator.textContent =
+            pullDistance > PULL_THRESHOLD ? "釋放以更新行程" : "下拉更新行程";
+        }
+      },
+      { passive: true }
+    );
+
+    window.addEventListener(
+      "touchend",
+      () => {
+        if (!isPulling) return;
+        if (pullDistance > PULL_THRESHOLD) {
+          window.location.reload(true);
+        } else if (pullIndicator) {
+          pullIndicator.classList.remove("show");
+        }
         isPulling = false;
-      }
-    }, { passive: true });
-
-    window.addEventListener("touchmove", (e) => {
-      if (!isPulling) return;
-      const currentY = e.touches[0].clientY;
-      pullDistance = currentY - pullStartY;
-      if (pullDistance > 0 && pullIndicator) {
-        pullIndicator.classList.add("show");
-        pullIndicator.textContent = pullDistance > PULL_THRESHOLD ? "釋放以更新行程" : "下拉更新行程";
-      }
-    }, { passive: true });
-
-    window.addEventListener("touchend", () => {
-      if (!isPulling) return;
-      if (pullDistance > PULL_THRESHOLD) {
-        window.location.reload(true);
-      } else if (pullIndicator) {
-        pullIndicator.classList.remove("show");
-      }
-      isPulling = false;
-      pullDistance = 0;
-    }, { passive: true });
-
-    // 氣候平均數據：用作預報未覆蓋時的 fallback
-    function fetchClimateNormal() {
-      const url =
-        "https://climate-api.open-meteo.com/v1/climate" +
-        "?latitude=31.23&longitude=121.47" +
-        "&start=1991&end=2020" +
-        "&monthly=temperature_2m_max,temperature_2m_min";
-      return fetch(url).then(r => r.json());
-    }
+        pullDistance = 0;
+      },
+      { passive: true }
+    );
 
     // Weather + Sunrise/Sunset
     const weatherTodayEl = document.getElementById("weather-today");
@@ -565,6 +581,97 @@
       longitude +
       "&timezone=Asia%2FShanghai&daily=temperature_2m_max,temperature_2m_min,sunrise,sunset";
 
+    // 氣候平均值 API
+    const climateUrl =
+      "https://climate-api.open-meteo.com/v1/climate?latitude=" +
+      latitude +
+      "&longitude=" +
+      longitude +
+      "&start_date=1994-01-01&end_date=2023-12-31" +
+      "&models=MPI_ESM1_2_XR" +
+      "&daily=temperature_2m_max,temperature_2m_min&timezone=Asia%2FShanghai";
+
+    const tripMonthDays = ["12-05", "12-06", "12-07"];
+
+    function loadClimateFallback() {
+      weatherDaysEl.innerHTML = "";
+
+      fetch(climateUrl)
+        .then(r => r.json())
+        .then(climate => {
+          if (!climate.daily || !climate.daily.time) {
+            const info = document.createElement("div");
+            info.style.fontSize = "11px";
+            info.style.color = "#777777";
+            info.textContent = "暫時未能取得歷年氣候平均值  請稍後再試。";
+            weatherDaysEl.appendChild(info);
+            return;
+          }
+
+          const dates = climate.daily.time;
+          const maxTemps = climate.daily.temperature_2m_max;
+          const minTemps = climate.daily.temperature_2m_min;
+
+          const buckets = {};
+          dates.forEach((iso, idx) => {
+            const mmdd = iso.slice(5, 10);
+            if (!buckets[mmdd]) {
+              buckets[mmdd] = { max: [], min: [] };
+            }
+            const tMax = maxTemps[idx];
+            const tMin = minTemps[idx];
+            if (typeof tMax === "number") buckets[mmdd].max.push(tMax);
+            if (typeof tMin === "number") buckets[mmdd].min.push(tMin);
+          });
+
+          let hasCard = false;
+
+          tripMonthDays.forEach(md => {
+            const stats = buckets[md];
+            if (!stats || !stats.max.length || !stats.min.length) return;
+
+            const avgMax = Math.round(
+              stats.max.reduce((sum, v) => sum + v, 0) / stats.max.length
+            );
+            const avgMin = Math.round(
+              stats.min.reduce((sum, v) => sum + v, 0) / stats.min.length
+            );
+
+            const card = document.createElement("div");
+            card.className = "weather-day";
+
+            const lbl = document.createElement("div");
+            lbl.className = "weather-day-label";
+            lbl.textContent = md.replace("-", "/") + "（歷年平均）";
+
+            const temp = document.createElement("div");
+            temp.className = "weather-temp";
+            temp.textContent = "高 " + avgMax + "°  低 " + avgMin + "°";
+
+            card.appendChild(lbl);
+            card.appendChild(temp);
+            weatherDaysEl.appendChild(card);
+            hasCard = true;
+          });
+
+          if (!hasCard) {
+            const info = document.createElement("div");
+            info.style.fontSize = "11px";
+            info.style.color = "#777777";
+            info.textContent =
+              "暫時未能為行程日期計算歷年氣候平均值  請稍後再試。";
+            weatherDaysEl.appendChild(info);
+          }
+        })
+        .catch(() => {
+          const info = document.createElement("div");
+          info.style.fontSize = "11px";
+          info.style.color = "#777777";
+          info.textContent = "暫時未能連線到氣候服務  稍後再試一次。";
+          weatherDaysEl.appendChild(info);
+        });
+    }
+
     fetch(weatherUrl)
       .then(r => r.json())
       .then(data => {
@@ -572,6 +679,7 @@
           weatherTodayEl.textContent = "暫時無法取得天氣資料";
           weatherSunEl.textContent = "";
           weatherUpdatedEl.textContent = "";
+          loadClimateFallback();
           return;
         }
 
@@ -626,62 +734,20 @@
           weatherDaysEl.appendChild(card);
         });
 
-        // 如預報未覆蓋行程日期，改用歷年平均
         if (!weatherDaysEl.hasChildNodes()) {
-          fetchClimateNormal()
-            .then(climate => {
-              if (
-                !climate.monthly ||
-                !climate.monthly.temperature_2m_max ||
-                !climate.monthly.temperature_2m_min
-              ) {
-                throw new Error("no climate data");
-              }
-
-              // 以十二月為例：tripDates 係 12 月 5 至 7
-              const month = 12; // 固定寫死十二月行程
-              const max = Math.round(climate.monthly.temperature_2m_max[month - 1]);
-              const min = Math.round(climate.monthly.temperature_2m_min[month - 1]);
-
-              tripDates.forEach(td => {
-                const card = document.createElement("div");
-                card.className = "weather-day";
-
-                const lbl = document.createElement("div");
-                lbl.className = "weather-day-label";
-                lbl.textContent = td + "（平均值）";
-
-                const temp = document.createElement("div");
-                temp.className = "weather-temp";
-                temp.textContent = "高 " + max + "°  低 " + min + "°";
-
-                const note = document.createElement("div");
-                note.style.fontSize = "10px";
-                note.style.color = "#777777";
-                note.textContent = "過去約三十年同月平均高低溫";
-
-                card.appendChild(lbl);
-                card.appendChild(temp);
-                card.appendChild(note);
-                weatherDaysEl.appendChild(card);
-              });
-            })
-            .catch(() => {
-              const info = document.createElement("div");
-              info.style.fontSize = "11px";
-              info.style.color = "#777777";
-              info.textContent = "預報暫未覆蓋行程日期  請於行程前約七日至十日再查看。";
-              weatherDaysEl.appendChild(info);
-            });
+          loadClimateFallback();
         }
       })
       .catch(() => {
         weatherTodayEl.textContent = "暫時無法連線到天氣服務";
         weatherSunEl.textContent = "";
         weatherUpdatedEl.textContent = "";
+        loadClimateFallback();
       });
 
-    // Modal with gallery + Google Maps
+    // 之後全部保持不變 包括 modal, gallery, 行程 JSON render ...
+
+    // Modal with gallery + maps + booking pdf + dianping
     const detailBackdrop = document.getElementById("detail-backdrop");
     const detailTitle = document.getElementById("detail-title");
     const detailTime = document.getElementById("detail-time");
@@ -699,7 +765,7 @@
     function lockBodyScroll() {
       bodyScrollY = window.scrollY || window.pageYOffset || 0;
       document.body.style.position = "fixed";
-      document.body.style.top = `-${bodyScrollY}px`;
+      document.body.style.top = -bodyScrollY + "px";
       document.body.style.left = "0";
       document.body.style.right = "0";
       document.body.style.width = "100%";
@@ -711,45 +777,40 @@
       document.body.style.left = "";
       document.body.style.right = "";
       document.body.style.width = "";
-      window.scrollTo(0, bodyScrollY || 0);
+      window.scrollTo(0, bodyScrollY);
     }
 
     const GALLERIES = {
-      "hotel_quanji": [
+      hotel_quanji: [
         "assets/galleries/quanji/quanji_1.webp",
-        "assets/galleries/quanji/quanji_2.webp"
+        "assets/galleries/quanji/quanji_2.webp",
+        "assets/galleries/quanji/quanji_3.webp"
       ],
-      "hotel_jingan": [
+      hotel_jingan: [
         "assets/galleries/jingan/jingan_1.webp",
         "assets/galleries/jingan/jingan_2.webp"
       ],
-      "bund": [
+      bund: [
         "assets/galleries/bund/bund_1.webp",
-        "assets/galleries/bund/bund_2.jpg"
+        "assets/galleries/bund/bund_2.webp"
       ],
-      "north_bund": [
-        "assets/galleries/northbund/northbund_1.jpg",
-        "assets/galleries/northbund/northbund_2.jpg"
+      north_bund: [
+        "assets/galleries/north_bund/northbund_1.webp",
+        "assets/galleries/north_bund/northbund_2.webp"
       ],
-      "wukang": [
-        "assets/galleries/wukang/wukang_1.jpg",
-        "assets/galleries/wukang/wukang_2.jpg"
+      wukang: [
+        "assets/galleries/wukang/wukang_1.webp",
+        "assets/galleries/wukang/wukang_2.webp"
       ],
-      "xintiandi": [
-        "assets/galleries/xintiandi/xintiandi_1.jpg",
-        "assets/galleries/xintiandi/xintiandi_2.jpg"
-      ],
-      "quanji_booking": [
-        "assets/galleries/quanji/quanji_booking.jpg"
-      ],
-      "jingan_booking": [
-        "assets/galleries/jingan/jingan_booking.jpg"
+      xintiandi: [
+        "assets/galleries/xintiandi/xintiandi_1.webp",
+        "assets/galleries/xintiandi/xintiandi_2.webp"
       ]
     };
 
     let currentMapsUrl = "";
+    let currentBookingPdf = "";
     let currentDianpingUrl = "";
-    let currentBookingUrl = "";
     let currentGallery = [];
     let currentGalleryIndex = 0;
 
@@ -760,25 +821,30 @@
         dot.className = "modal-dot" + (idx === currentGalleryIndex ? " active" : "");
         dot.addEventListener("click", () => {
           currentGalleryIndex = idx;
-          updateGalleryImage();
+          updateGalleryImage(true);
         });
         detailDots.appendChild(dot);
       });
     }
 
-    function updateGalleryImage() {
+    function updateGalleryImage(withAnimation) {
       if (!currentGallery.length) return;
-      detailImg.classList.remove("fade-in");
-      detailImg.classList.add("fade-out");
-      setTimeout(() => {
-        detailImg.src = currentGallery[currentGalleryIndex];
+      const nextSrc = currentGallery[currentGalleryIndex];
+      if (!withAnimation) {
+        detailImg.src = nextSrc;
         renderDots();
-        detailImg.classList.remove("fade-out");
-        detailImg.classList.add("fade-in");
-        setTimeout(() => {
-          detailImg.classList.remove("fade-in");
-        }, 220);
-      }, 120);
+        return;
+      }
+      detailImg.classList.add("swipe-anim");
+      detailImg.addEventListener(
+        "animationend",
+        () => {
+          detailImg.classList.remove("swipe-anim");
+          detailImg.src = nextSrc;
+          renderDots();
+        },
+        { once: true }
+      );
     }
 
     function setupTimelineClickHandlers() {
@@ -786,46 +852,44 @@
         item.addEventListener("click", () => {
           const title = item.getAttribute("data-title") || "";
           const time = item.getAttribute("data-time") || "";
+          const detailLinesAttr = item.getAttribute("data-detail-lines") || "";
           const detail = item.getAttribute("data-detail") || "";
-          const detailLinesRaw = item.getAttribute("data-detail-lines");
           const maps = item.getAttribute("data-maps") || "";
           const galleryKey = item.getAttribute("data-gallery") || "";
-          const dianping = item.getAttribute("data-dianping") || "";
-          const bookingGalleryKey = item.getAttribute("data-booking-gallery") || "";
           const bookingPdf = item.getAttribute("data-booking-pdf") || "";
+          const dianpingUrl = item.getAttribute("data-dianping-url") || "";
 
           detailTitle.textContent = title;
           detailTime.textContent = time;
-          if (detailLinesRaw) {
+
+          if (detailLinesAttr) {
             try {
-              const lines = JSON.parse(detailLinesRaw);
-              detailBody.innerHTML = lines.map(line => `<div>${line}</div>`).join("");
+              const lines = JSON.parse(detailLinesAttr);
+              detailBody.innerHTML = lines
+                .map(line => "<div>" + line + "</div>")
+                .join("");
             } catch (e) {
-              detailBody.textContent = detail;
+              detailBody.textContent = detail || "";
             }
           } else {
-            detailBody.textContent = detail;
+            detailBody.textContent = detail || "";
           }
+
           currentMapsUrl = maps;
-          currentDianpingUrl = dianping;
-          currentBookingUrl = bookingPdf;
-          detailBackdrop.classList.add("active");
-          lockBodyScroll();
+          currentBookingPdf = bookingPdf;
+          currentDianpingUrl = dianpingUrl;
 
-          let combinedGallery = [];
           if (galleryKey && GALLERIES[galleryKey]) {
-            combinedGallery = combinedGallery.concat(GALLERIES[galleryKey]);
-          }
-          if (bookingGalleryKey && GALLERIES[bookingGalleryKey]) {
-            combinedGallery = combinedGallery.concat(GALLERIES[bookingGalleryKey]);
-          }
-
-          if (combinedGallery.length) {
-            currentGallery = combinedGallery.slice();
+            currentGallery = GALLERIES[galleryKey].slice();
             currentGalleryIndex = 0;
             detailImgWrapper.style.display = "block";
             detailDots.style.display = "flex";
-            updateGalleryImage();
+            if (!detailImg.src) {
+              detailImg.src = currentGallery[0];
+            } else {
+              detailImg.src = currentGallery[0];
+            }
+            renderDots();
           } else {
             currentGallery = [];
             detailImgWrapper.style.display = "none";
@@ -833,85 +897,46 @@
             detailImg.src = "";
           }
 
-          if (!maps) {
-            detailMapsBtn.style.display = "none";
-          } else {
-            detailMapsBtn.style.display = "inline-block";
-          }
+          detailMapsBtn.style.display = maps ? "inline-block" : "none";
+          detailBookingBtn.style.display = bookingPdf ? "inline-block" : "none";
+          detailDianpingBtn.style.display = dianpingUrl ? "inline-block" : "none";
 
-          if (!dianping) {
-            detailDianpingBtn.style.display = "none";
-          } else {
-            detailDianpingBtn.style.display = "inline-block";
-          }
-
-          if (!bookingPdf) {
-            detailBookingBtn.style.display = "none";
-          } else {
-            detailBookingBtn.style.display = "inline-block";
-          }
+          detailBackdrop.classList.add("active");
+          lockBodyScroll();
         });
       });
     }
 
-    // Swipe 支援：在圖片區左／右掃切換上一張／下一張
     let touchStartX = 0;
-    let touchStartY = 0;
     let touchEndX = 0;
-    let touchEndY = 0;
-    const SWIPE_THRESHOLD = 40;
+    const SWIPE_THRESHOLD = 30;
 
-    if (detailImgWrapper) {
-      detailImgWrapper.addEventListener("touchstart", (e) => {
-        if (!e.touches || !e.touches.length) return;
-        touchStartX = e.touches[0].clientX;
-        touchStartY = e.touches[0].clientY;
-        touchEndX = touchStartX;
-        touchEndY = touchStartY;
-      }, { passive: true });
+    detailImg.addEventListener("touchstart", e => {
+      if (!currentGallery.length) return;
+      touchStartX = e.touches[0].clientX;
+      touchEndX = touchStartX;
+    });
 
-      detailImgWrapper.addEventListener("touchmove", (e) => {
-        if (!e.touches || !e.touches.length) return;
-        touchEndX = e.touches[0].clientX;
-        touchEndY = e.touches[0].clientY;
-      }, { passive: true });
+    detailImg.addEventListener("touchmove", e => {
+      if (!currentGallery.length) return;
+      touchEndX = e.touches[0].clientX;
+    });
 
-      detailImgWrapper.addEventListener("touchend", () => {
-        const diffX = touchEndX - touchStartX;
-        const diffY = touchEndY - touchStartY;
+    detailImg.addEventListener("touchend", () => {
+      if (!currentGallery.length) return;
+      const deltaX = touchEndX - touchStartX;
+      if (Math.abs(deltaX) < SWIPE_THRESHOLD) return;
 
-        if (Math.abs(diffX) < SWIPE_THRESHOLD || Math.abs(diffX) <= Math.abs(diffY)) {
-          return;
-        }
-        if (!currentGallery || !currentGallery.length) return;
-
-        if (diffX < 0) {
-          currentGalleryIndex = (currentGalleryIndex + 1) % currentGallery.length;
-        } else {
-          currentGalleryIndex = (currentGalleryIndex - 1 + currentGallery.length) % currentGallery.length;
-        }
-        updateGalleryImage();
-      });
-    }
-
-    // 點一下圖片：左半上一張 右半下一張
-    detailImg.addEventListener("click", (e) => {
-      if (!currentGallery || !currentGallery.length) return;
-
-      const rect = detailImg.getBoundingClientRect();
-      const clickX = e.clientX - rect.left;
-      const half = rect.width / 2;
-
-      if (clickX < half) {
-        currentGalleryIndex =
-          (currentGalleryIndex - 1 + currentGallery.length) % currentGallery.length;
+      if (deltaX < 0) {
+        currentGalleryIndex = (currentGalleryIndex + 1) % currentGallery.length;
       } else {
         currentGalleryIndex =
-          (currentGalleryIndex + 1) % currentGallery.length;
+          (currentGalleryIndex - 1 + currentGallery.length) % currentGallery.length;
       }
-
-      updateGalleryImage();
+      updateGalleryImage(true);
     });
+
+    detailImg.addEventListener("click", () => {});
 
     detailClose.addEventListener("click", () => {
       detailBackdrop.classList.remove("active");
@@ -925,14 +950,15 @@
       }
     });
 
-    // 阻止在打開相片時整個頁面跟住滑動
-    detailBackdrop.addEventListener("touchmove", (e) => {
-      e.preventDefault();
-    }, { passive: false });
-
     detailMapsBtn.addEventListener("click", () => {
       if (currentMapsUrl) {
         window.open(currentMapsUrl, "_blank");
+      }
+    });
+
+    detailBookingBtn.addEventListener("click", () => {
+      if (currentBookingPdf) {
+        window.open(currentBookingPdf, "_blank");
       }
     });
 
@@ -942,13 +968,6 @@
       }
     });
 
-    detailBookingBtn.addEventListener("click", () => {
-      if (currentBookingUrl) {
-        window.open(currentBookingUrl, "_blank");
-      }
-    });
-
-    // Shanghai date helper
     function getShanghaiDateString() {
       const now = new Date();
       const offsetMinutes = 8 * 60 + now.getTimezoneOffset();
@@ -1001,8 +1020,12 @@
         tabs.forEach(t => t.classList.remove("active"));
         dayContents.forEach(d => d.classList.remove("active"));
 
-        const activeTab = document.querySelector('.day-tab[data-day-index="' + todayIndex + '"]');
-        const activeContent = document.querySelector('.day-content[data-day-index="' + todayIndex + '"]');
+        const activeTab = document.querySelector(
+          '.day-tab[data-day-index="' + todayIndex + '"]'
+        );
+        const activeContent = document.querySelector(
+          '.day-content[data-day-index="' + todayIndex + '"]'
+        );
         if (activeTab) activeTab.classList.add("active");
         if (activeContent) activeContent.classList.add("active");
 
@@ -1034,28 +1057,48 @@
       const footerNote = document.getElementById("footer-note");
 
       if (data.meta) {
-        if (data.meta.titleSmall && headerSmall) headerSmall.textContent = data.meta.titleSmall;
-        if (data.meta.titleMain && headerMain) headerMain.textContent = data.meta.titleMain;
+        if (data.meta.titleSmall && headerSmall)
+          headerSmall.textContent = data.meta.titleSmall;
+        if (data.meta.titleMain && headerMain)
+          headerMain.textContent = data.meta.titleMain;
         if (headerSub) {
           const lines = [];
           if (data.meta.dateRange) {
             lines.push("旅程日期  " + data.meta.dateRange);
           }
           if (data.meta.outbound) {
-            lines.push("去程 " + data.meta.outbound.flight + "  " + data.meta.outbound.route + "  " + data.meta.outbound.time);
+            lines.push(
+              "去程 " +
+                data.meta.outbound.flight +
+                "  " +
+                data.meta.outbound.route +
+                "  " +
+                data.meta.outbound.time
+            );
           }
           if (data.meta.inbound) {
-            lines.push("回程 " + data.meta.inbound.flight + "  " + data.meta.inbound.route + "  " + data.meta.inbound.time);
+            lines.push(
+              "回程 " +
+                data.meta.inbound.flight +
+                "  " +
+                data.meta.inbound.route +
+                "  " +
+                data.meta.inbound.time
+            );
           }
           headerSub.innerHTML = lines.join("<br/>");
         }
         if (data.meta.outbound && outboundMain && outboundSub) {
-          outboundMain.textContent = data.meta.outbound.date + "  " + data.meta.outbound.flight;
-          outboundSub.textContent = data.meta.outbound.route + "  " + data.meta.outbound.time;
+          outboundMain.textContent =
+            data.meta.outbound.date + "  " + data.meta.outbound.flight;
+          outboundSub.textContent =
+            data.meta.outbound.route + "  " + data.meta.outbound.time;
         }
         if (data.meta.inbound && inboundMain && inboundSub) {
-          inboundMain.textContent = data.meta.inbound.date + "  " + data.meta.inbound.flight;
-          inboundSub.textContent = data.meta.inbound.route + " " + data.meta.inbound.time;
+          inboundMain.textContent =
+            data.meta.inbound.date + "  " + data.meta.inbound.flight;
+          inboundSub.textContent =
+            data.meta.inbound.route + " " + data.meta.inbound.time;
         }
         if (data.meta.footerNote && footerNote) {
           footerNote.textContent = data.meta.footerNote;
@@ -1073,7 +1116,7 @@
         const tab = document.createElement("button");
         tab.className = "day-tab" + (index === 0 ? " active" : "");
         tab.dataset.dayIndex = String(index);
-        tab.textContent = day.label || ("Day " + (index + 1));
+        tab.textContent = day.label || "Day " + (index + 1);
         tabsEl.appendChild(tab);
 
         const content = document.createElement("div");
@@ -1082,7 +1125,8 @@
 
         const titleEl = document.createElement("div");
         titleEl.className = "section-title";
-        titleEl.textContent = (day.date ? day.date + "  " : "") + (day.title || "");
+        titleEl.textContent =
+          (day.date ? day.date + "  " : "") + (day.title || "");
         content.appendChild(titleEl);
 
         if (day.subtitle) {
@@ -1100,22 +1144,23 @@
               itemEl.classList.add("clickable");
               itemEl.setAttribute("data-title", item.title || "");
               itemEl.setAttribute("data-time", item.time || "");
-              itemEl.setAttribute("data-detail", item.detail || "");
-              if (item.detailLines) {
-                itemEl.setAttribute("data-detail-lines", JSON.stringify(item.detailLines));
+              if (item.detailLines && item.detailLines.length) {
+                itemEl.setAttribute(
+                  "data-detail-lines",
+                  JSON.stringify(item.detailLines)
+                );
+              } else {
+                itemEl.setAttribute("data-detail", item.detail || "");
               }
               itemEl.setAttribute("data-maps", item.maps || "");
               if (item.gallery) {
                 itemEl.setAttribute("data-gallery", item.gallery);
               }
-              if (item.dianping) {
-                itemEl.setAttribute("data-dianping", item.dianping);
-              }
-              if (item.bookingGallery) {
-                itemEl.setAttribute("data-booking-gallery", item.bookingGallery);
-              }
               if (item.bookingPdf) {
                 itemEl.setAttribute("data-booking-pdf", item.bookingPdf);
+              }
+              if (item.dianpingUrl) {
+                itemEl.setAttribute("data-dianping-url", item.dianpingUrl);
               }
             }
 
@@ -1161,7 +1206,9 @@
           dayContents.forEach(d => d.classList.remove("active"));
           tab.classList.add("active");
           const idx = tab.dataset.dayIndex;
-          const activeContent = document.querySelector('.day-content[data-day-index="' + idx + '"]');
+          const activeContent = document.querySelector(
+            '.day-content[data-day-index="' + idx + '"]'
+          );
           if (activeContent) activeContent.classList.add("active");
           window.scrollTo({ top: 0, behavior: "smooth" });
         });
