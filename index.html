@@ -471,6 +471,7 @@
       <div class="modal-time" id="detail-time">時間</div>
       <div class="modal-body" id="detail-body">詳細內容</div>
       <div class="modal-actions">
+        <button class="modal-link-btn" id="detail-booking-btn" style="display:none;">查看酒店預訂 PDF</button>
         <button class="modal-link-btn" id="detail-maps-btn">在百度地圖開啟</button>
         <button class="modal-close-btn" id="detail-close">關閉</button>
       </div>
@@ -622,6 +623,7 @@
     const detailBody = document.getElementById("detail-body");
     const detailClose = document.getElementById("detail-close");
     const detailMapsBtn = document.getElementById("detail-maps-btn");
+    const detailBookingBtn = document.getElementById("detail-booking-btn");
     const detailImgWrapper = document.getElementById("detail-img-wrapper");
     const detailImg = document.getElementById("detail-img");
     const detailDots = document.getElementById("detail-dots");
@@ -632,10 +634,13 @@
       "bund": ["bund_1.jpg", "bund_2.jpg"],
       "north_bund": ["northbund_1.jpg", "northbund_2.jpg"],
       "wukang": ["wukang_1.jpg", "wukang_2.jpg"],
-      "xintiandi": ["xintiandi_1.jpg", "xintiandi_2.jpg"]
+      "xintiandi": ["xintiandi_1.jpg", "xintiandi_2.jpg"],
+      "quanji_booking": ["quanji_booking.jpg"],
+      "jingan_booking": ["jingan_booking.jpg"]
     };
 
     let currentMapsUrl = "";
+    let currentBookingUrl = "";
     let currentGallery = [];
     let currentGalleryIndex = 0;
 
@@ -666,15 +671,26 @@
           const detail = item.getAttribute("data-detail") || "";
           const maps = item.getAttribute("data-maps") || "";
           const galleryKey = item.getAttribute("data-gallery") || "";
+          const bookingGalleryKey = item.getAttribute("data-booking-gallery") || "";
+          const bookingPdf = item.getAttribute("data-booking-pdf") || "";
 
           detailTitle.textContent = title;
           detailTime.textContent = time;
           detailBody.textContent = detail;
           currentMapsUrl = maps;
+          currentBookingUrl = bookingPdf;
           detailBackdrop.classList.add("active");
 
+          let combinedGallery = [];
           if (galleryKey && GALLERIES[galleryKey]) {
-            currentGallery = GALLERIES[galleryKey].slice();
+            combinedGallery = combinedGallery.concat(GALLERIES[galleryKey]);
+          }
+          if (bookingGalleryKey && GALLERIES[bookingGalleryKey]) {
+            combinedGallery = combinedGallery.concat(GALLERIES[bookingGalleryKey]);
+          }
+
+          if (combinedGallery.length) {
+            currentGallery = combinedGallery.slice();
             currentGalleryIndex = 0;
             detailImgWrapper.style.display = "block";
             detailDots.style.display = "flex";
@@ -690,6 +706,12 @@
             detailMapsBtn.style.display = "none";
           } else {
             detailMapsBtn.style.display = "inline-block";
+          }
+
+          if (!bookingPdf) {
+            detailBookingBtn.style.display = "none";
+          } else {
+            detailBookingBtn.style.display = "inline-block";
           }
         });
       });
@@ -714,6 +736,12 @@
     detailMapsBtn.addEventListener("click", () => {
       if (currentMapsUrl) {
         window.open(currentMapsUrl, "_blank");
+      }
+    });
+
+    detailBookingBtn.addEventListener("click", () => {
+      if (currentBookingUrl) {
+        window.open(currentBookingUrl, "_blank");
       }
     });
 
@@ -873,6 +901,12 @@ function getShanghaiDateString() {
               itemEl.setAttribute("data-maps", item.maps || "");
               if (item.gallery) {
                 itemEl.setAttribute("data-gallery", item.gallery);
+              }
+              if (item.bookingGallery) {
+                itemEl.setAttribute("data-booking-gallery", item.bookingGallery);
+              }
+              if (item.bookingPdf) {
+                itemEl.setAttribute("data-booking-pdf", item.bookingPdf);
               }
             }
 
