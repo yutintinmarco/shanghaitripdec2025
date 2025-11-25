@@ -337,6 +337,16 @@
       width: 100%;
       border-radius: 14px;
       display: block;
+      transition: opacity 0.25s ease, transform 0.25s ease;
+      will-change: opacity, transform;
+    }
+    .modal-img-wrapper img.fade-out {
+      opacity: 0;
+      transform: translateX(-8px);
+    }
+    .modal-img-wrapper img.fade-in {
+      opacity: 1;
+      transform: translateX(0);
     }
     .modal-dots {
       display: flex;
@@ -665,8 +675,19 @@
 
     function updateGalleryImage() {
       if (!currentGallery.length) return;
-      detailImg.src = currentGallery[currentGalleryIndex];
-      renderDots();
+      // 先做淡出
+      detailImg.classList.remove("fade-in");
+      detailImg.classList.add("fade-out");
+      setTimeout(() => {
+        detailImg.src = currentGallery[currentGalleryIndex];
+        renderDots();
+        // 再淡入
+        detailImg.classList.remove("fade-out");
+        detailImg.classList.add("fade-in");
+        setTimeout(() => {
+          detailImg.classList.remove("fade-in");
+        }, 220);
+      }, 120);
     }
 
     function setupTimelineClickHandlers() {
@@ -744,11 +765,52 @@
       });
     }
 
-    detailImg.addEventListener("click", () => {
-      if (!currentGallery.length) return;
-      currentGalleryIndex = (currentGalleryIndex + 1) % currentGallery.length;
-      updateGalleryImage();
-    });
+    // Swipe 支援：在圖片區左／右掃切換上一張／下一張
+    let touchStartX = 0;
+    let touchStartY = 0;
+    let touchEndX = 0;
+    let touchEndY = 0;
+    const SWIPE_THRESHOLD = 40; // 最少橫向移動距離
+
+    if (detailImgWrapper) {
+      detailImgWrapper.addEventListener("touchstart", (e) => {
+        if (!e.touches || !e.touches.length) return;
+        touchStartX = e.touches[0].clientX;
+        touchStartY = e.touches[0].clientY;
+        touchEndX = touchStartX;
+        touchEndY = touchStartY;
+      }, { passive: true });
+
+      detailImgWrapper.addEventListener("touchmove", (e) => {
+        if (!e.touches || !e.touches.length) return;
+        touchEndX = e.touches[0].clientX;
+        touchEndY = e.touches[0].clientY;
+      }, { passive: true });
+
+      detailImgWrapper.addEventListener("touchend", () => {
+        const diffX = touchEndX - touchStartX;
+        const diffY = touchEndY - touchStartY;
+
+        // 主要係橫向 swipe 先觸發
+        if (Math.abs(diffX) < SWIPE_THRESHOLD || Math.abs(diffX) <= Math.abs(diffY)) {
+          return;
+        }
+
+        if (!currentGallery || !currentGallery.length) return;
+
+        if (diffX < 0) {
+          // 向左掃：下一張
+          currentGalleryIndex = (currentGalleryIndex + 1) % currentGallery.length;
+        } else {
+          // 向右掃：上一張
+          currentGalleryIndex = (currentGalleryIndex - 1 + currentGallery.length) % currentGallery.length;
+        }
+        updateGalleryImage();
+      });
+    }
+
+    // 點一下圖片唔再切換相片
+    detailImg.addEventListener("click", () => {});
 
     detailClose.addEventListener("click", () => {
       detailBackdrop.classList.remove("active");
