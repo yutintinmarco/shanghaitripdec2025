@@ -3,9 +3,9 @@
 <head>
   <meta charset="utf-8" />
   <meta
-  name="viewport"
-  content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
-/>
+    name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no"
+  />
   <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate" />
   <meta http-equiv="Pragma" content="no-cache" />
   <meta http-equiv="Expires" content="0" />
@@ -22,7 +22,7 @@
       font-family: -apple-system, BlinkMacSystemFont, "SF Pro Text", system-ui, sans-serif;
       background: rgba(245,245,247,0.80);
       color: #111111;
-}
+    }
     .container {
       max-width: 480px;
       margin: 0 auto;
@@ -403,7 +403,7 @@
       font-size: 12px;
     }
   </style>
-<link rel="apple-touch-icon" href="assets/icon/trip_icon.png" />
+  <link rel="apple-touch-icon" href="assets/icon/trip_icon.png" />
   <link rel="icon" type="image/png" href="assets/icon/trip_icon.png" />
 </head>
 <body>
@@ -539,6 +539,16 @@
       pullDistance = 0;
     }, { passive: true });
 
+    // 氣候平均數據：用作預報未覆蓋時的 fallback
+    function fetchClimateNormal() {
+      const url =
+        "https://climate-api.open-meteo.com/v1/climate" +
+        "?latitude=31.23&longitude=121.47" +
+        "&start=1991&end=2020" +
+        "&monthly=temperature_2m_max,temperature_2m_min";
+      return fetch(url).then(r => r.json());
+    }
+
     // Weather + Sunrise/Sunset
     const weatherTodayEl = document.getElementById("weather-today");
     const weatherSunEl = document.getElementById("weather-sun");
@@ -616,12 +626,53 @@
           weatherDaysEl.appendChild(card);
         });
 
+        // 如預報未覆蓋行程日期，改用歷年平均
         if (!weatherDaysEl.hasChildNodes()) {
-          const info = document.createElement("div");
-          info.style.fontSize = "11px";
-          info.style.color = "#777777";
-          info.textContent = "預報暫未覆蓋旅程日期  開行程前幾日再查看。";
-          weatherDaysEl.appendChild(info);
+          fetchClimateNormal()
+            .then(climate => {
+              if (
+                !climate.monthly ||
+                !climate.monthly.temperature_2m_max ||
+                !climate.monthly.temperature_2m_min
+              ) {
+                throw new Error("no climate data");
+              }
+
+              // 以十二月為例：tripDates 係 12 月 5 至 7
+              const month = 12; // 固定寫死十二月行程
+              const max = Math.round(climate.monthly.temperature_2m_max[month - 1]);
+              const min = Math.round(climate.monthly.temperature_2m_min[month - 1]);
+
+              tripDates.forEach(td => {
+                const card = document.createElement("div");
+                card.className = "weather-day";
+
+                const lbl = document.createElement("div");
+                lbl.className = "weather-day-label";
+                lbl.textContent = td + "（平均值）";
+
+                const temp = document.createElement("div");
+                temp.className = "weather-temp";
+                temp.textContent = "高 " + max + "°  低 " + min + "°";
+
+                const note = document.createElement("div");
+                note.style.fontSize = "10px";
+                note.style.color = "#777777";
+                note.textContent = "過去約三十年同月平均高低溫";
+
+                card.appendChild(lbl);
+                card.appendChild(temp);
+                card.appendChild(note);
+                weatherDaysEl.appendChild(card);
+              });
+            })
+            .catch(() => {
+              const info = document.createElement("div");
+              info.style.fontSize = "11px";
+              info.style.color = "#777777";
+              info.textContent = "預報暫未覆蓋行程日期  請於行程前約七日至十日再查看。";
+              weatherDaysEl.appendChild(info);
+            });
         }
       })
       .catch(() => {
@@ -642,7 +693,6 @@
     const detailImg = document.getElementById("detail-img");
     const detailDots = document.getElementById("detail-dots");
     const detailDianpingBtn = document.getElementById("detail-dianping-btn");
-
 
     let bodyScrollY = 0;
 
@@ -718,13 +768,11 @@
 
     function updateGalleryImage() {
       if (!currentGallery.length) return;
-      // 先做淡出
       detailImg.classList.remove("fade-in");
       detailImg.classList.add("fade-out");
       setTimeout(() => {
         detailImg.src = currentGallery[currentGalleryIndex];
         renderDots();
-        // 再淡入
         detailImg.classList.remove("fade-out");
         detailImg.classList.add("fade-in");
         setTimeout(() => {
@@ -762,6 +810,7 @@
           currentDianpingUrl = dianping;
           currentBookingUrl = bookingPdf;
           detailBackdrop.classList.add("active");
+          lockBodyScroll();
 
           let combinedGallery = [];
           if (galleryKey && GALLERIES[galleryKey]) {
@@ -784,21 +833,18 @@
             detailImg.src = "";
           }
 
-          // 百度地圖按鈕
           if (!maps) {
             detailMapsBtn.style.display = "none";
           } else {
             detailMapsBtn.style.display = "inline-block";
           }
 
-          // 大眾點評按鈕
           if (!dianping) {
             detailDianpingBtn.style.display = "none";
           } else {
             detailDianpingBtn.style.display = "inline-block";
           }
 
-          // PDF按鈕
           if (!bookingPdf) {
             detailBookingBtn.style.display = "none";
           } else {
@@ -813,7 +859,7 @@
     let touchStartY = 0;
     let touchEndX = 0;
     let touchEndY = 0;
-    const SWIPE_THRESHOLD = 40; // 最少橫向移動距離
+    const SWIPE_THRESHOLD = 40;
 
     if (detailImgWrapper) {
       detailImgWrapper.addEventListener("touchstart", (e) => {
@@ -834,18 +880,14 @@
         const diffX = touchEndX - touchStartX;
         const diffY = touchEndY - touchStartY;
 
-        // 主要係橫向 swipe 先觸發
         if (Math.abs(diffX) < SWIPE_THRESHOLD || Math.abs(diffX) <= Math.abs(diffY)) {
           return;
         }
-
         if (!currentGallery || !currentGallery.length) return;
 
         if (diffX < 0) {
-          // 向左掃：下一張
           currentGalleryIndex = (currentGalleryIndex + 1) % currentGallery.length;
         } else {
-          // 向右掃：上一張
           currentGalleryIndex = (currentGalleryIndex - 1 + currentGallery.length) % currentGallery.length;
         }
         updateGalleryImage();
@@ -861,11 +903,9 @@
       const half = rect.width / 2;
 
       if (clickX < half) {
-        // 左半點一下 → 上一張
         currentGalleryIndex =
           (currentGalleryIndex - 1 + currentGallery.length) % currentGallery.length;
       } else {
-        // 右半點一下 → 下一張
         currentGalleryIndex =
           (currentGalleryIndex + 1) % currentGallery.length;
       }
@@ -884,11 +924,11 @@
         unlockBodyScroll();
       }
     });
+
     // 阻止在打開相片時整個頁面跟住滑動
     detailBackdrop.addEventListener("touchmove", (e) => {
       e.preventDefault();
     }, { passive: false });
-
 
     detailMapsBtn.addEventListener("click", () => {
       if (currentMapsUrl) {
@@ -897,10 +937,10 @@
     });
 
     detailDianpingBtn.addEventListener("click", () => {
-     if (currentDianpingUrl) {
-       window.open(currentDianpingUrl, "_blank");
-   }
-   });
+      if (currentDianpingUrl) {
+        window.open(currentDianpingUrl, "_blank");
+      }
+    });
 
     detailBookingBtn.addEventListener("click", () => {
       if (currentBookingUrl) {
@@ -909,15 +949,15 @@
     });
 
     // Shanghai date helper
-function getShanghaiDateString() {
-  const now = new Date();
-  const offsetMinutes = 8 * 60 + now.getTimezoneOffset();
-  const cst = new Date(now.getTime() + offsetMinutes * 60000);
-  const y = cst.getFullYear();
-  const m = String(cst.getMonth() + 1).padStart(2, "0");
-  const d = String(cst.getDate()).padStart(2, "0");
-  return y + "-" + m + "-" + d;
-}
+    function getShanghaiDateString() {
+      const now = new Date();
+      const offsetMinutes = 8 * 60 + now.getTimezoneOffset();
+      const cst = new Date(now.getTime() + offsetMinutes * 60000);
+      const y = cst.getFullYear();
+      const m = String(cst.getMonth() + 1).padStart(2, "0");
+      const d = String(cst.getDate()).padStart(2, "0");
+      return y + "-" + m + "-" + d;
+    }
 
     function updateTodayChipAndStatus(data) {
       const chip = document.getElementById("today-chip");
@@ -1069,7 +1109,7 @@ function getShanghaiDateString() {
                 itemEl.setAttribute("data-gallery", item.gallery);
               }
               if (item.dianping) {
-               itemEl.setAttribute("data-dianping", item.dianping);
+                itemEl.setAttribute("data-dianping", item.dianping);
               }
               if (item.bookingGallery) {
                 itemEl.setAttribute("data-booking-gallery", item.bookingGallery);
