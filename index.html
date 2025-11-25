@@ -643,9 +643,30 @@
     const detailDots = document.getElementById("detail-dots");
     const detailDianpingBtn = document.getElementById("detail-dianping-btn");
 
+
+    let bodyScrollY = 0;
+
+    function lockBodyScroll() {
+      bodyScrollY = window.scrollY || window.pageYOffset || 0;
+      document.body.style.position = "fixed";
+      document.body.style.top = `-${bodyScrollY}px`;
+      document.body.style.left = "0";
+      document.body.style.right = "0";
+      document.body.style.width = "100%";
+    }
+
+    function unlockBodyScroll() {
+      document.body.style.position = "";
+      document.body.style.top = "";
+      document.body.style.left = "";
+      document.body.style.right = "";
+      document.body.style.width = "";
+      window.scrollTo(0, bodyScrollY || 0);
+    }
+
     const GALLERIES = {
       "hotel_quanji": ["quanji_1.webp", "quanji_2.webp"],
-      "hotel_jingan": ["jingan_1.jpg", "jingan_2.jpg"],
+      "hotel_jingan": ["jingan_1.webp", "jingan_2.webp"],
       "bund": ["bund_1.jpg", "bund_2.jpg"],
       "north_bund": ["northbund_1.jpg", "northbund_2.jpg"],
       "wukang": ["wukang_1.jpg", "wukang_2.jpg"],
@@ -809,18 +830,43 @@
       });
     }
 
-    // 點一下圖片唔再切換相片
-    detailImg.addEventListener("click", () => {});
+    // 點一下圖片：左半上一張 右半下一張
+    detailImg.addEventListener("click", (e) => {
+      if (!currentGallery || !currentGallery.length) return;
+
+      const rect = detailImg.getBoundingClientRect();
+      const clickX = e.clientX - rect.left;
+      const half = rect.width / 2;
+
+      if (clickX < half) {
+        // 左半點一下 → 上一張
+        currentGalleryIndex =
+          (currentGalleryIndex - 1 + currentGallery.length) % currentGallery.length;
+      } else {
+        // 右半點一下 → 下一張
+        currentGalleryIndex =
+          (currentGalleryIndex + 1) % currentGallery.length;
+      }
+
+      updateGalleryImage();
+    });
 
     detailClose.addEventListener("click", () => {
       detailBackdrop.classList.remove("active");
+      unlockBodyScroll();
     });
 
     detailBackdrop.addEventListener("click", e => {
       if (e.target === detailBackdrop) {
         detailBackdrop.classList.remove("active");
+        unlockBodyScroll();
       }
     });
+    // 阻止在打開相片時整個頁面跟住滑動
+    detailBackdrop.addEventListener("touchmove", (e) => {
+      e.preventDefault();
+    }, { passive: false });
+
 
     detailMapsBtn.addEventListener("click", () => {
       if (currentMapsUrl) {
