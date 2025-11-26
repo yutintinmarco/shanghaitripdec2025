@@ -76,6 +76,7 @@
           "icon": "🧳",
           "title": "退房  前往靜安香格里拉大酒店",
           "note": "預留時間 check out  及移動到新酒店",
+          "popup": true,
           "gallery": "hotel_jingan"
         },
         {
@@ -85,7 +86,7 @@
           "note": "可先寄存行李  如可提早入住可稍作休息",
           "popup": true,
           "detail": "位處靜安區核心地段  交通方便  連接大型商場及餐飲設施  建議先熟悉最近地鐵站及商場出入口。",
-          "maps": "https://map.baidu.com/search/%E9%9D%99%E5%AE%89%E9%A6%99%E6%A0%BC%E9%87%8C%E6%8B%89%E5%A4%A7%E9%85%92%E5%BA%97",
+          "maps": "https://j.map.baidu.com/b6/Mn",
           "gallery": "hotel_jingan",
           "bookingPdf": "assets/booking/jingan_booking.pdf",
           "bookingGallery": "jingan_booking",
