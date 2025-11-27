@@ -45,7 +45,7 @@
           "note": "以休息為主  為翌日行程儲備體力",
           "popup": true,
           "detail": "全季酒店走簡潔實用風格 鄰近武寧路地鐵站 周邊有便利店及餐飲選擇 適合短途商旅及週末行程。",
-          "maps": "https://j.map.baidu.com/43/Sjr",
+          "dianping": "http://dpurl.cn/mRHS0s5z",
           "gallery": "hotel_quanji",
           "bookingPdf": "assets/booking/quanji_booking.pdf",
           "bookingGallery": "quanji_booking",
@@ -86,7 +86,7 @@
           "note": "可先寄存行李  如可提早入住可稍作休息",
           "popup": true,
           "detail": "位處靜安區核心地段  交通方便  連接大型商場及餐飲設施  建議先熟悉最近地鐵站及商場出入口。",
-          "maps": "https://j.map.baidu.com/b6/Mn",
+          "dianping": "http://dpurl.cn/cNHibEKz",
           "gallery": "hotel_jingan",
           "bookingPdf": "assets/booking/jingan_booking.pdf",
           "bookingGallery": "jingan_booking",
@@ -110,7 +110,7 @@
           "note": "經典上海天際線景觀",
           "popup": true,
           "detail": "上海代表性景點之一  可遠眺浦東摩天大樓及黃浦江景色  建議預留拍照時間  人流較多時留意個人財物。",
-          "maps": "https://map.baidu.com/search/%E5%A4%96%E6%B4%A9",
+          "dianping": "http://dpurl.cn/OiNJ3sIz",
           "gallery": "bund",
           "detailLines": [
             "上海代表性景點之一",
@@ -126,7 +126,7 @@
           "note": "建議乘地鐵前往天潼路站  再步行進入",
           "popup": true,
           "detail": "上海最繁華商圈之一  百貨公司及品牌店林立  適合購物及感受城市氣氛。",
-          "maps": "https://map.baidu.com/search/%E5%8D%97%E4%BA%AC%E8%B7%AF%E6%AD%A5%E8%A1%8C%E8%A1%97",
+          "dianping": "http://dpurl.cn/SdtkWkwz",
           "detailLines": [
             "上海最繁華商圈之一",
             "百貨公司及品牌店林立",
@@ -140,7 +140,7 @@
           "note": "可拍攝外白渡橋與東方明珠同框畫面",
           "popup": true,
           "detail": "經典拍攝角度集中區  可從不同橋位欣賞黃浦江兩岸景色  適合黃昏前後逗留。",
-          "maps": "https://map.baidu.com/search/%E4%B8%8A%E6%B5%B7%E9%82%AE%E6%94%BF%E5%8D%9A%E7%89%A9%E9%A6%86",
+          "dianping": "http://dpurl.cn/lQ0Hw7Dz",
           "detailLines": [
             "經典拍攝角度集中區",
             "可從不同橋位欣賞黃浦江兩岸景色",
@@ -160,7 +160,7 @@
           "note": "可按當日情況選擇餐廳",
           "popup": true,
           "detail": "鄰近北外灘一帶的綜合商業區  餐廳選擇多樣  方便飯後順道欣賞夜景。",
-          "maps": "https://map.baidu.com/search/%E7%99%BD%E7%8E%89%E5%85%B0%E5%B9%BF%E5%9C%BA",
+          "dianping": "https://m.dianping.com/shopshare/H2pe9P1vNxRKonqc?msource=Appshare2021&utm_source=shop_share&shoptype=20&shopcategoryid=119&isoversea=0&shareid=aZoSHZJJ4x_1764236804",
           "detailLines": [
             "鄰近北外灘一帶的綜合商業區",
             "餐廳選擇多樣",
@@ -174,7 +174,7 @@
           "note": "感受黃浦江兩岸燈光景致",
           "popup": true,
           "detail": "視野開揚  夜景極佳  適合散步及拍照  亦可作為外灘景觀的另一觀賞角度。",
-          "maps": "https://map.baidu.com/search/%E5%8C%97%E5%A4%96%E6%B4%A9",
+          "dianping": "http://dpurl.cn/idYuQeYz",
           "gallery": "north_bund",
           "detailLines": [
             "視野開揚",
@@ -196,7 +196,7 @@
           "note": "視乎現場排隊及氣氛靈活決定逗留時間",
           "popup": true,
           "detail": "在亞洲酒吧榜單中屢獲佳績的雞尾酒吧  氣氛熱鬧  建議預早到達或預留排隊時間。",
-          "maps": "https://map.baidu.com/search/COA%20%E9%85%92%E5%90%A7",
+          "dianping": "https://m.dianping.com/shopshare/l9TrTpGO4iuaT1to?msource=Appshare2021&utm_source=shop_share&shoptype=30&shopcategoryid=50122&isoversea=0&shareid=4dr7ppz1XJ_1764236733",
           "detailLines": [
             "在亞洲酒吧榜單中屢獲佳績的雞尾酒吧",
             "氣氛熱鬧",
@@ -225,7 +225,7 @@
           "note": "上海經典打卡地標",
           "popup": true,
           "detail": "武康大樓為著名歷史建築  呈楔形外觀  是法租界一帶人氣拍照地點  人流較多時注意安全。",
-          "maps": "https://map.baidu.com/search/%E6%AD%A6%E5%BA%B7%E5%A4%A7%E6%A5%BC",
+          "dianping": "http://dpurl.cn/7W3dpdLz",
           "gallery": "wukang",
           "detailLines": [
             "武康大樓為著名歷史建築",
@@ -241,7 +241,7 @@
           "note": "感受法租界街區氛圍",
           "popup": true,
           "detail": "沿路有多間特色小店及咖啡店  樹蔭大道適合慢行  視乎時間彈性調整行程長度。",
-          "maps": "https://map.baidu.com/search/%E5%AE%89%E7%A6%8F%E8%B7%AF",
+          "dianping": "http://dpurl.cn/haywoM3z",
           "detailLines": [
             "沿路有多間特色小店及咖啡店",
             "樹蔭大道適合慢行",
@@ -270,7 +270,7 @@
           "note": "短暫參觀或在附近走走",
           "popup": true,
           "detail": "上海著名寺廟之一  外觀金光閃耀  周邊商業設施亦相當集中。",
-          "maps": "https://map.baidu.com/search/%E9%9D%99%E5%AE%89%E5%AF%BA",
+          "dianping": "http://dpurl.cn/4iOh7c8z",
           "detailLines": [
             "上海著名寺廟之一",
             "外觀金光閃耀",
@@ -280,11 +280,26 @@
         {
           "time": "13:30",
           "icon": "🖼️",
-          "title": "淮海中路  新天地  巨人展",
+          "title": "淮海中路  上海新天地",
           "note": "依實際展覽地點及時間安排行程",
           "popup": true,
-          "detail": "淮海中路及新天地一帶結合商場  餐飲及展覽空間  適合邊逛邊看展。",
-          "maps": "https://map.baidu.com/search/%E6%B7%AE%E6%B5%B7%E4%B8%AD%E8%B7%AF%20%E6%96%B0%E5%A4%A9%E5%9C%B0",
+          "detail": "淮海中路及新天地一帶結合商場  餐飲及展覽空間。",
+          "dianping": "https://m.dianping.com/shopshare/l2tKjvADK1ITaUqM?msource=Appshare2021&utm_source=shop_share&shoptype=20&shopcategoryid=119&isoversea=0&shareid=BvPIRewAq8_1764236369",
+          "gallery": "xintiandi",
+          "detailLines": [
+            "淮海中路及新天地一帶結合商場",
+            "餐飲及展覽空間",
+            "適合邊逛邊看展"
+          ]
+        },
+        {
+          "time": "14:15",
+          "icon": "🖼️",
+          "title": "巨人展",
+          "note": "依實際展覽地點及時間安排行程",
+          "popup": true,
+          "detail": "適合邊逛邊看展。",
+          "dianping": "https://m.dianping.com/shopshare/G66exX3NEiM3O1SD?msource=Appshare2021&utm_source=shop_share&shoptype=20&shopcategoryid=128&isoversea=0&shareid=hqZrc3x0zu_1764236329",
           "gallery": "xintiandi",
           "detailLines": [
             "淮海中路及新天地一帶結合商場",
@@ -305,7 +320,7 @@
           "note": "文學迷可細味周邊街區氣氛",
           "popup": true,
           "detail": "與張愛玲相關的生活場域  留有舊上海的味道  適合文青散步路線。",
-          "dianping": "https://www.dianping.com/shop/H1uVcBwSPiRI4BUl",
+          "dianping": "https://m.dianping.com/shopshare/H1uVcBwSPiRI4BUl?msource=Appshare2021&utm_source=shop_share&shoptype=30&shopcategoryid=50034&isoversea=0&shareid=G9X4YVf6Rh_1764236290",
           "detailLines": [
             "與張愛玲相關的生活場域",
             "留有舊上海的味道",
@@ -319,7 +334,8 @@
           "note": "為回程前最後一頓正式晚餐",
           "popup": true,
           "detail": "口碑不俗的餐廳  建議預早訂位或提早到達。",
-          "maps": "https://map.baidu.com/search/%E4%BA%BA%E5%92%8C%E9%A6%86",
+          "dianping": "https://m.dianping.com/shopinfo/k4pwu5ab9M9hgSkw?msource=Appshare2021&utm_source=shop_share&shoptype=10&shopcategoryid=34256&cityid=1&isoversea=0",
+          "gallery": "RenHeGuan",
           "detailLines": [
             "口碑不俗的餐廳",
             "建議預早訂位或提早到達"
